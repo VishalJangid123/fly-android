@@ -30,6 +30,25 @@ public class MenuScene : MonoBehaviour
             Button b = t.GetComponent<Button>();
             b.onClick.AddListener(() => onLevelSelect(currentIndex));
 
+            Image img = t.GetComponent<Image>();
+
+            if(i<= SaveManager.instance.levelCompleted)
+            {
+                if (i == SaveManager.instance.levelCompleted)
+                {
+                    img.color = Color.white;
+                }
+                else
+                {
+                    img.color = Color.green;
+                }
+            }
+            else
+            {
+                b.interactable = false;
+                img.color = Color.grey;
+            }
+
             i++;
         }
         i = 0; // Reseting the index
@@ -48,6 +67,8 @@ public class MenuScene : MonoBehaviour
     }
     private void onLevelSelect(int currentIndex)
     {
+        Manager.instance.currentLevel = currentIndex;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
         Debug.Log("Button Clicked : " + currentIndex);
     }
 
